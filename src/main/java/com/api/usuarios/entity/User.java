@@ -1,4 +1,4 @@
-package com.api.usuarios.Entity;
+package com.api.usuarios.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

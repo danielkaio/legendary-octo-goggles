@@ -1,12 +1,10 @@
-package com.api.usuarios;
+package com.api.usuarios.service;
 
-import com.api.usuarios.Entity.User;
+import com.api.usuarios.entity.User;
 import com.api.usuarios.repository.UserRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @Service
 public class UserService {
@@ -17,13 +15,23 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
-  @GetMapping("/users")
-  public List<User> List() {
-    return this.userRepository.findAll();
+  @GetMapping
+  public List<User> list() {
+    return userRepository.findAll();
   }
 
   @PostMapping
   public User create(@RequestBody User user) {
     return userRepository.save(user);
+  }
+
+  public String ListID(@PathVariable Long Id) {
+
+    return this.userRepository.findById(Id).toString();
+  }
+
+  @DeleteMapping
+  public void remove() {
+    this.userRepository.deleteAll();
   }
 }
