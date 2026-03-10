@@ -1,0 +1,32 @@
+package com.api.usuarios.Entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Table(name = "users")
+@Getter
+@Setter
+public class User {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
+  private String nome;
+
+  private String email;
+
+  public User() {}
+
+  public User(String nome, String email) {
+    this.nome = nome;
+    this.email = email;
+  }
+
+  @Override
+  public String toString() {
+    return "User{" + "id=" + id + ", nome='" + nome + '\'' + ", email='" + email + '\'' + '}';
+  }
+}
