@@ -4,6 +4,7 @@ import com.api.usuarios.Entity.User;
 import com.api.usuarios.repository.UserRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -16,6 +17,7 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
+  @GetMapping("/users")
   public List<User> List() {
     return this.userRepository.findAll();
   }
