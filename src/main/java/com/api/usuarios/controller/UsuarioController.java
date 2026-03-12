@@ -1,7 +1,6 @@
 package com.api.usuarios.controller;
 
 import com.api.usuarios.entity.User;
-import com.api.usuarios.repository.UserRepository;
 import com.api.usuarios.service.UserService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,7 @@ public class UsuarioController {
 
   private final UserService userService;
 
-  public UsuarioController( UserService userService) {
+  public UsuarioController(UserService userService) {
     this.userService = userService;
   }
 
@@ -31,6 +30,15 @@ public class UsuarioController {
   @PostMapping
   public User create(@RequestBody User user) {
     return userService.create(user);
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
+
+    return userService
+        .updateId(id, user)
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
   }
 
   @DeleteMapping

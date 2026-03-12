@@ -27,6 +27,22 @@ public class UserService {
     return userRepository.findById(id);
   }
 
+  public Optional<User> updateId(Long id, User user) {
+
+    Optional<User> existingUser = userRepository.findById(id);
+
+    if (existingUser.isPresent()) {
+
+      User u = existingUser.get();
+      u.setNome(user.getNome());
+      u.setEmail(user.getEmail());
+
+      return Optional.of(userRepository.save(u));
+    }
+
+    return Optional.empty();
+  }
+
   public void remove() {
     userRepository.deleteAll();
   }
