@@ -2,6 +2,7 @@ package com.api.usuarios.controller;
 
 import com.api.usuarios.entity.User;
 import com.api.usuarios.repository.UserRepository;
+import com.api.usuarios.service.UserService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,33 +11,30 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
-  private final UserRepository userRepository;
+  private final UserService userService;
 
-  public UsuarioController(UserRepository userRepository) {
-    this.userRepository = userRepository;
+  public UsuarioController( UserService userService) {
+    this.userService = userService;
   }
 
   @GetMapping
   public List<User> listUsuarios() {
-    return userRepository.findAll();
+    return userService.listUser();
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<User> buscar(@PathVariable Long id) {
 
-    return userRepository
-        .findById(id)
-        .map(ResponseEntity::ok)
-        .orElse(ResponseEntity.notFound().build());
+    return userService.listId(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
   }
 
   @PostMapping
   public User create(@RequestBody User user) {
-    return userRepository.save(user);
+    return userService.create(user);
   }
 
   @DeleteMapping
   public void RemoveUserAll() {
-    userRepository.deleteAll();
+    userService.remove();
   }
 }
