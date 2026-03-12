@@ -15,12 +15,10 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
-  @GetMapping
   public List<User> list() {
     return userRepository.findAll();
   }
 
-  @PostMapping
   public User create(@RequestBody User user) {
     return userRepository.save(user);
   }
@@ -30,7 +28,6 @@ public class UserService {
     return this.userRepository.findById(Id).toString();
   }
 
-  @DeleteMapping
   public void remove() {
     this.userRepository.deleteAll();
   }
