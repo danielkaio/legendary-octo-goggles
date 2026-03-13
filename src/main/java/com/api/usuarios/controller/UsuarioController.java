@@ -42,6 +42,13 @@ public class UsuarioController {
         .orElse(ResponseEntity.notFound().build());
   }
 
+  @DeleteMapping("/{id}")
+  public ResponseEntity<UserDto> DeletarID(@PathVariable Long id) {
+
+    userService.deleteId(id);
+    return ResponseEntity.noContent().build();
+  }
+
   @DeleteMapping
   public void RemoveUserAll() {
     userService.remove();

@@ -5,7 +5,12 @@ import com.api.usuarios.entity.User;
 import com.api.usuarios.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
+
+import jakarta.transaction.Transactional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import static java.util.Arrays.stream;
 
 @Service
 public class UserService {
@@ -32,6 +37,10 @@ public class UserService {
         .map(user -> new UserDto(user.getNome(), user.getId(), user.getEmail()));
   }
 
+  @Transactional
+  public void deleteId(Long id) {
+    userRepository.deleteById(id);
+  }
   public Optional<UserDto> updateId(Long id, UserDto dto) {
 
     return userRepository
@@ -39,7 +48,7 @@ public class UserService {
         .map(
             user -> {
               user.setNome(dto.getNome());
-              //  user.setEmail(dto.getEmail());
+                user.setEmail(dto.getEmail());
 
               User saved = userRepository.save(user);
 
