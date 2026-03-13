@@ -20,10 +20,7 @@ public class User {
 
   public User() {}
 
-  public User(String nome, String email) {
-    this.nome = nome;
-    this.email = email;
-  }
+  public User(long id, String nome, String email) {}
 
   @Override
   public String toString() {

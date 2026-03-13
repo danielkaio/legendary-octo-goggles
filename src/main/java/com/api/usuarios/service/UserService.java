@@ -1,5 +1,6 @@
 package com.api.usuarios.service;
 
+import com.api.usuarios.dto.UserDto;
 import com.api.usuarios.entity.User;
 import com.api.usuarios.repository.UserRepository;
 import java.util.List;
@@ -15,32 +16,35 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
-  public List<User> listUser() {
-    return userRepository.findAll();
+  public List<UserDto> listUser() {
+    return userRepository.findAll().stream()
+        .map(user -> new UserDto(user.getNome(), user.getId(), user.getEmail()))
+        .toList();
   }
 
-  public User create(User user) {
-    return userRepository.save(user);
+  public User createUser(User UserDto) {
+    return userRepository.save(UserDto);
   }
 
-  public Optional<User> listId(Long id) {
-    return userRepository.findById(id);
+  public Optional<UserDto> listId(Long id) {
+    return userRepository
+        .findById(id)
+        .map(user -> new UserDto(user.getNome(), user.getId(), user.getEmail()));
   }
 
-  public Optional<User> updateId(Long id, User user) {
+  public Optional<UserDto> updateId(Long id, UserDto dto) {
 
-    Optional<User> existingUser = userRepository.findById(id);
+    return userRepository
+        .findById(id)
+        .map(
+            user -> {
+              user.setNome(dto.getNome());
+              //  user.setEmail(dto.getEmail());
 
-    if (existingUser.isPresent()) {
+              User saved = userRepository.save(user);
 
-      User u = existingUser.get();
-      u.setNome(user.getNome());
-      u.setEmail(user.getEmail());
-
-      return Optional.of(userRepository.save(u));
-    }
-
-    return Optional.empty();
+              return new UserDto(saved.getNome(), saved.getId(), saved.getEmail());
+            });
   }
 
   public void remove() {

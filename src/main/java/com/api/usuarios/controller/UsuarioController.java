@@ -1,5 +1,6 @@
 package com.api.usuarios.controller;
 
+import com.api.usuarios.dto.UserDto;
 import com.api.usuarios.entity.User;
 import com.api.usuarios.service.UserService;
 import java.util.List;
@@ -17,26 +18,26 @@ public class UsuarioController {
   }
 
   @GetMapping
-  public List<User> listUsuarios() {
+  public List<UserDto> listUsuarios() {
     return userService.listUser();
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<User> buscar(@PathVariable Long id) {
+  public ResponseEntity<UserDto> buscar(@PathVariable Long id) {
 
     return userService.listId(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
   }
 
   @PostMapping
-  public User create(@RequestBody User user) {
-    return userService.create(user);
+  public User create(@RequestBody User UserDto) {
+    return userService.createUser(UserDto);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
+  public ResponseEntity<UserDto> update(@PathVariable Long id, @RequestBody UserDto dto) {
 
     return userService
-        .updateId(id, user)
+        .updateId(id, dto)
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
   }
