@@ -5,12 +5,8 @@ import com.api.usuarios.entity.User;
 import com.api.usuarios.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
-
-import jakarta.transaction.Transactional;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import static java.util.Arrays.stream;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -21,6 +17,7 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
+  @Transactional(readOnly = true)
   public List<UserDto> listUser() {
     return userRepository.findAll().stream()
         .map(user -> new UserDto(user.getNome(), user.getId(), user.getEmail()))
@@ -41,6 +38,8 @@ public class UserService {
   public void deleteId(Long id) {
     userRepository.deleteById(id);
   }
+
+  @Transactional(readOnly = false)
   public Optional<UserDto> updateId(Long id, UserDto dto) {
 
     return userRepository
@@ -48,7 +47,7 @@ public class UserService {
         .map(
             user -> {
               user.setNome(dto.getNome());
-                user.setEmail(dto.getEmail());
+              user.setEmail(dto.getEmail());
 
               User saved = userRepository.save(user);
 
