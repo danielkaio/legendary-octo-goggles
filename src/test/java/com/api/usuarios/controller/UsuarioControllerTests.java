@@ -38,14 +38,14 @@ class UsuarioControllerTests {
   @BeforeEach
   void setUp() {
     user = new User(1L, "João Silva", "joao@example.com");
-    userDto = new UserDto("João Silva", 1L, "joao@example.com");
+    userDto = new UserDto(1L, "João Silva", "joao@example.com");
   }
 
   @Test
   @DisplayName("GET /usuarios - Deve listar todos os usuários")
   void testListUsuarios_Success() throws Exception {
     // Arrange
-    UserDto userDto2 = new UserDto("Maria Santos", 2L, "maria@example.com");
+    UserDto userDto2 = new UserDto(2L, "Maria Santos", "maria@example.com");
     when(userService.listUser()).thenReturn(Arrays.asList(userDto, userDto2));
 
     // Act & Assert
@@ -134,7 +134,7 @@ class UsuarioControllerTests {
   void testUpdate_Success() throws Exception {
     // Arrange
     UserDto updatedDto =
-        new UserDto("João Atualizado", 1L, "joao.novo@example.com");
+        new UserDto(1L, "João Atualizado", "joao.novo@example.com");
     when(userService.updateId(eq(1L), any(UserDto.class)))
         .thenReturn(Optional.of(updatedDto));
 
@@ -158,7 +158,7 @@ class UsuarioControllerTests {
   void testUpdate_NotFound() throws Exception {
     // Arrange
     UserDto updateDto =
-        new UserDto("João Atualizado", 999L, "joao@example.com");
+        new UserDto(999L, "João Atualizado", "joao@example.com");
     when(userService.updateId(eq(999L), any(UserDto.class)))
         .thenReturn(Optional.empty());
 

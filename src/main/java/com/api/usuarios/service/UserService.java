@@ -20,7 +20,7 @@ public class UserService {
   @Transactional(readOnly = true)
   public List<UserDto> listUser() {
     return userRepository.findAll().stream()
-        .map(user -> new UserDto(user.getNome(), user.getId(), user.getEmail()))
+          .map(user -> new UserDto(user.getId(), user.getNome(), user.getEmail()))
         .toList();
   }
 
@@ -31,7 +31,7 @@ public class UserService {
   public Optional<UserDto> listId(Long id) {
     return userRepository
         .findById(id)
-        .map(user -> new UserDto(user.getNome(), user.getId(), user.getEmail()));
+        .map(user -> new UserDto(user.getId(),user.getNome(),user.getEmail()));
   }
 
   @Transactional
@@ -46,12 +46,12 @@ public class UserService {
         .findById(id)
         .map(
             user -> {
-              user.setNome(dto.getNome());
-              user.setEmail(dto.getEmail());
+              user.setNome(dto.nome());
+              user.setEmail(dto.email());
 
               User saved = userRepository.save(user);
 
-              return new UserDto(saved.getNome(), saved.getId(), saved.getEmail());
+              return new UserDto(saved.getId(), saved.getNome(), saved.getEmail());
             });
   }
 

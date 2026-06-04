@@ -23,7 +23,11 @@ public class User {
 
   public User() {}
 
-  public User(long id, String nome, String email) {}
+  public User(Long id, String nome, String email) {
+    this.id = id;
+    this.nome = nome;
+    this.email = email;
+  }
 
   @Override
   public String toString() {

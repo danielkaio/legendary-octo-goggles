@@ -36,7 +36,7 @@ class UserServiceTests {
     user.setId(1L);
     user.setNome("João Silva");
     user.setEmail("joao@example.com");
-    userDto = new UserDto("João Silva", 1L, "joao@example.com");
+    userDto = new UserDto(1L, "daniel", "dani.ajala@yahoo.com");
   }
 
   @Test
@@ -55,8 +55,8 @@ class UserServiceTests {
     // Assert
     assertNotNull(result);
     assertEquals(2, result.size());
-    assertEquals("João Silva", result.get(0).getNome());
-    assertEquals("maria@example.com", result.get(1).getEmail());
+    assertEquals("João Silva", result.get(0).nome());
+    assertEquals("maria@example.com", result.get(1).email());
     verify(userRepository, times(1)).findAll();
   }
 
@@ -110,9 +110,9 @@ class UserServiceTests {
 
     // Assert
     assertTrue(result.isPresent());
-    assertEquals("João Silva", result.get().getNome());
-    assertEquals(1L, result.get().getId());
-    assertEquals("joao@example.com", result.get().getEmail());
+    assertEquals("João Silva", result.get().nome());
+    assertEquals(1L, result.get().id());
+    assertEquals("joao@example.com", result.get().email());
     verify(userRepository, times(1)).findById(1L);
   }
 
@@ -134,7 +134,7 @@ class UserServiceTests {
   @DisplayName("Deve atualizar usuário com sucesso")
   void testUpdateId_Success() {
     // Arrange
-    UserDto updateDto = new UserDto("João Atualizado", 1L, "joao.novo@example.com");
+    UserDto updateDto = new UserDto(1L, "João Atualizado", "joao.novo@example.com");
     User existingUser = new User();
     existingUser.setId(1L);
     existingUser.setNome("João Silva");
@@ -153,8 +153,8 @@ class UserServiceTests {
 
     // Assert
     assertTrue(result.isPresent());
-    assertEquals("João Atualizado", result.get().getNome());
-    assertEquals("joao.novo@example.com", result.get().getEmail());
+    assertEquals("João Atualizado", result.get().nome());
+    assertEquals("joao.novo@example.com", result.get().email());
     verify(userRepository, times(1)).findById(1L);
     verify(userRepository, times(1)).save(any(User.class));
   }
